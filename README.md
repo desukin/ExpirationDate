@@ -3,7 +3,7 @@
 《杀戮尖塔2》Mod —— 卡牌有了保质期？战斗后可能消失！可自定义的挑战性 modifiers，支持游戏内 Mod 配置菜单开关。
 
 - **作者**: mius
-- **版本**: v1.0.0
+- **版本**: v1.2.0
 - **游戏版本**: v0.103.2
 - **前置 Mod**: [BaseLib](https://github.com/minimento/BaseLib)（v3.1.3+）
 
@@ -17,6 +17,7 @@
 |------|------|
 | 🕒 **保质期** | 获得的卡牌在 **5 场战斗后** 自动从牌组中移除。谨慎规划你的卡组——没有什么能永恒。 |
 | ✨ **随机附魔** | 每张进入牌组的卡牌都会获得一个**随机原版附魔**。让每场游戏都充满变数。 |
+| ❓ **全是事件** | 地图上的**小怪房间全部变为未知(?)房间**。适合速通或只想打精英/Boss。 |
 | 📈 **敌人成长** | 怪物血量会随**实时游戏时长**增长：每分钟 +1% 最大生命值。打得越久，战斗越难。 |
 | ❓ **隐藏血量** | 敌人的生命值和格挡值被隐藏（显示为"?"）。血条本身仍然可见，只能粗略判断。 |
 
@@ -48,7 +49,7 @@ ExpirationDate/
 ├── CustomModifiers.csproj       # .NET 9.0 项目文件
 ├── ModEntry.cs                  # 入口文件 & Harmony 补丁
 ├── ExpirationDateConfig.cs      # 配置 UI
-├── AllRemorsefulMod.cs          # 核心逻辑（4 个 Harmony Patch）
+├── AllRemorsefulMod.cs          # 核心逻辑（5 个 Harmony Patch）
 ├── RandomEnchantment.cs         # 随机附魔逻辑
 ├── project.godot                # Godot 项目文件（用于 PCK 导出）
 ├── README.md                    # 本文件
