@@ -1,11 +1,13 @@
 {
-  "id": "ExpirationDate",
-  "name": "Expiration Date",
-  "author": "mius",
-  "description": "All cards obtained become remorseful — removed from deck after 5 combats. Toggle via Mod Configuration menu.",
-  "version": "1.0.0",
-  "has_dll": true,
-  "has_pck": false,
-  "dependencies": ["BaseLib"],
-  "affects_gameplay": true
+    "id":  "ExpirationDate",
+    "name":  "Expiration Date",
+    "author":  "mius",
+    "description":  "4 toggleable effects in Mod Config: (1) Cards expire after 5 combats, (2) Random enchant on pickup, (3) Enemy HP scales +1% per minute, (4) Hide enemy HP numbers.",
+    "version":  "1.2.0",
+    "has_dll":  true,
+    "has_pck":  false,
+    "dependencies":  [
+                         "BaseLib"
+                     ],
+    "affects_gameplay":  true
 }

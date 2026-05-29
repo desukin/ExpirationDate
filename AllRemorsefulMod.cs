@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Map;
 
 namespace ExpirationDate;
 
@@ -90,19 +91,47 @@ public static class AllRemorsefulMod
     [HarmonyPatch]
     public static class HideHpPatch
     {
-        static MethodBase TargetMethod() => typeof(NHealthBar).GetMethod("RefreshText", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        static void Postfix(NHealthBar __instance)
+        {
         static void Postfix(NHealthBar __instance)
         {
             if (!ExpirationDateConfig.HideEnemyHpEnabled) return;
 
-            // Only hide enemy HP, not player's
             var cf = typeof(NHealthBar).GetField("_creature", BindingFlags.NonPublic | BindingFlags.Instance);
             if (cf?.GetValue(__instance) is Creature creature && creature.IsPlayer) return;
 
+            // Hide the HP bar container (background + foreground)
+            var fgc = typeof(NHealthBar).GetField("_hpForegroundContainer", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (fgc?.GetValue(__instance) is Control ctrl) ctrl.Visible = false;
+
+            // Text already shows ? from previous logic, but belt-and-suspenders:
             var hf = typeof(NHealthBar).GetField("_hpLabel", BindingFlags.NonPublic | BindingFlags.Instance);
             var bf = typeof(NHealthBar).GetField("_blockLabel", BindingFlags.NonPublic | BindingFlags.Instance);
             if (hf?.GetValue(__instance) is Label hl) hl.Text = "?";
-            if (bf?.GetValue(__instance) is Label bl) bl.Text = "";
+        }
+    }
+    }
+
+    // ── 5. All Events: Monster rooms → Unknown ──
+
+    [HarmonyPatch]
+    public static class AllEventsPatch
+    {
+        static MethodBase TargetMethod() => typeof(Hook).GetMethod("ModifyGeneratedMapLate",
+            BindingFlags.Public | BindingFlags.Static)!;
+
+        static void Postfix(ActMap __result)
+        {
+            if (!ExpirationDateConfig.AllEventsEnabled) return;
+            try
+            {
+                foreach (var point in __result.GetAllMapPoints())
+                {
+                    if (point.PointType == MapPointType.Monster)
+                        point.PointType = MapPointType.Unknown;
+                }
+            }
+            catch (Exception ex) { Log.Error($"[ExpirationDate] AllEvents: {ex.Message}"); }
         }
     }
 }

@@ -10,11 +10,13 @@ public class ExpirationDateConfig : SimpleModConfig
     public static bool RandomEnchantEnabled { get; set; } = false;
     public static bool ScalingHpEnabled { get; set; } = false;
     public static bool HideEnemyHpEnabled { get; set; } = false;
+    public static bool AllEventsEnabled { get; set; } = false;
 
     public override void SetupConfigUI(Control optionContainer)
     {
         AddToggle(optionContainer, nameof(ExpirationEnabled), "保质期：卡牌5场战斗后删除");
-        AddToggle(optionContainer, nameof(RandomEnchantEnabled), "随机附魔：卡牌获得随机原版附魔");
+        AddToggle(optionContainer, nameof(HideEnemyHpEnabled), "隐藏血量：不显示敌人生命值");
+        AddToggle(optionContainer, nameof(AllEventsEnabled), "全是事件：小怪房变为随机事件");
         AddToggle(optionContainer, nameof(ScalingHpEnabled), "敌人成长：每分钟增加1%血量");
         AddToggle(optionContainer, nameof(HideEnemyHpEnabled), "隐藏血量：不显示敌人生命值");
 
