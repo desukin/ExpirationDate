@@ -2,7 +2,7 @@
 
 《杀戮尖塔2》Mod —— 卡牌有了保质期？战斗后可能消失！可自定义的挑战性 modifiers，支持游戏内 Mod 配置菜单开关。
 
-- **作者**: minimento
+- **作者**: mius
 - **版本**: v1.0.0
 - **游戏版本**: v0.103.2
 - **前置 Mod**: [BaseLib](https://github.com/minimento/BaseLib)（v3.1.3+）
