@@ -1,64 +1,64 @@
-# Expiration Date
+# Expiration Date（保质期）
 
-A mod for **Slay the Spire 2** that adds a set of challenging and flavorful run modifiers, configurable via the in-game Mod Configuration menu.
+《杀戮尖塔2》Mod —— 卡牌有了保质期？战斗后可能消失！可自定义的挑战性 modifiers，支持游戏内 Mod 配置菜单开关。
 
-Author: **minimento**  
-Version: **1.0.0**  
-Dependencies: **BaseLib**, **HarmonyLib**
-
----
-
-## Features
-
-| Toggle | Effect |
-|--------|--------|
-| 🕒 **Expiration Enabled** | All cards obtained during the run are removed from your deck after **5 combats**. Plan your deck carefully — nothing lasts forever. |
-| ✨ **Random Enchant Enabled** | Each card that enters your deck receives a **random vanilla enchantment**. Adds unpredictability to every run. |
-| 📈 **Scaling HP Enabled** | Enemy HP scales with **real-time play duration**: +1% Max HP per minute. The longer you play, the tougher the fights. |
-| ❓ **Hide Enemy HP Enabled** | Enemy HP and block values are hidden (shown as "?"). The health bar itself remains visible for a rough estimate. |
-
-All features are independently togglable in the mod config menu.
+- **作者**: minimento
+- **版本**: v1.0.0
+- **游戏版本**: v0.103.2
+- **前置 Mod**: [BaseLib](https://github.com/minimento/BaseLib)（v3.1.3+）
 
 ---
 
-## Installation
+## 功能介绍
 
-1. Install [BaseLib](https://github.com/minimento/BaseLib) (v3.1.3+)
-2. Download the latest release of Expiration Date
-3. Extract into `Slay the Spire 2/mods/ExpirationDate/`
-4. Enable the mod in the in-game mod manager
+所有功能均可在游戏内 Mod 配置菜单中**独立开关**。
 
-### Build from Source
+| 开关 | 效果 |
+|------|------|
+| 🕒 **保质期** | 获得的卡牌在 **5 场战斗后** 自动从牌组中移除。谨慎规划你的卡组——没有什么能永恒。 |
+| ✨ **随机附魔** | 每张进入牌组的卡牌都会获得一个**随机原版附魔**。让每场游戏都充满变数。 |
+| 📈 **敌人成长** | 怪物血量会随**实时游戏时长**增长：每分钟 +1% 最大生命值。打得越久，战斗越难。 |
+| ❓ **隐藏血量** | 敌人的生命值和格挡值被隐藏（显示为"?"）。血条本身仍然可见，只能粗略判断。 |
+
+---
+
+## 安装方法
+
+1. 先安装前置 Mod：[BaseLib](https://github.com/minimento/BaseLib)（v3.1.3+）
+2. 下载本 Mod 的最新版本
+3. 解压到 `Slay the Spire 2/mods/ExpirationDate/` 目录下
+4. 在游戏内 Mod 管理器中启用
+
+### 从源码编译
 
 ```bash
 cd ExpirationDate_backup
 dotnet build CustomModifiers.csproj -c Release
 ```
 
-The built `.dll` and `.json` will be automatically copied to your mods folder.
+编译后 `.dll` 和配置 `json` 会自动复制到游戏 mods 目录。
 
 ---
 
-## Project Structure
+## 项目结构
 
 ```
 ExpirationDate/
-├── ExpirationDate.json          # Mod manifest
-├── CustomModifiers.csproj       # .NET 9.0 project file
-├── ModEntry.cs                  # Entry point & Harmony patching
-├── ExpirationDateConfig.cs      # Configuration UI
-├── AllRemorsefulMod.cs          # Core logic (4 Harmony patches)
-├── RandomEnchantment.cs         # Random enchantment logic
-├── localization/
-│   └── settings_ui.json         # UI localization strings
-├── project.godot                # Godot project (for PCK export)
-└── export_presets.cfg           # Godot export config
+├── ExpirationDate.json          # Mod 清单文件
+├── CustomModifiers.csproj       # .NET 9.0 项目文件
+├── ModEntry.cs                  # 入口文件 & Harmony 补丁
+├── ExpirationDateConfig.cs      # 配置 UI
+├── AllRemorsefulMod.cs          # 核心逻辑（4 个 Harmony Patch）
+├── RandomEnchantment.cs         # 随机附魔逻辑
+├── project.godot                # Godot 项目文件（用于 PCK 导出）
+├── README.md                    # 本文件
+└── 开发报告.md                   # 中文技术开发文档
 ```
 
 ---
 
-## Compatibility
+## 兼容性
 
-- **Game version**: v0.103.2+
+- **游戏版本**: v0.103.2+
 - **BaseLib**: v3.1.3+
-- **affects_gameplay**: `true` — all players in multiplayer must have this mod installed
+- **多人兼容**: `affects_gameplay: true` — 多人联机时所有玩家均需安装本 Mod
