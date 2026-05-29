@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>ExpirationDate</AssemblyName>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Sts2Dir>D:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2</Sts2Dir>
+        <Sts2DataDir>$([System.IO.Directory]::GetDirectories('$(Sts2Dir)', 'data_sts2*')[0])</Sts2DataDir>
+        <AssemblySearchPaths>$(Sts2DataDir);$(AssemblySearchPaths)</AssemblySearchPaths>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="sts2">
+            <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="GodotSharp">
+            <HintPath>$(Sts2DataDir)\GodotSharp.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="0Harmony">
+            <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="BaseLib">
+            <HintPath>$(Sts2Dir)\mods\baselib\BaseLib.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+
+    <Target Name="CopyToMods" AfterTargets="Build">
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll"
+              DestinationFolder="$(Sts2Dir)\mods\ExpirationDate" />
+        <Copy SourceFiles="$(ProjectDir)ExpirationDate.json"
+              DestinationFolder="$(Sts2Dir)\mods\ExpirationDate" />
+    </Target>
+
+</Project>

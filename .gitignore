@@ -1,0 +1,11 @@
+bin/
+obj/
+.godot/
+*.user
+*.suo
+*.cache
+localization/
+_temp_cs/
+*.exe
+*.zip
+export_presets.cfg

@@ -1,0 +1,11 @@
+{
+  "id": "ExpirationDate",
+  "name": "Expiration Date",
+  "author": "minimento",
+  "description": "All cards obtained become remorseful — removed from deck after 5 combats. Toggle via Mod Configuration menu.",
+  "version": "1.0.0",
+  "has_dll": true,
+  "has_pck": false,
+  "dependencies": ["BaseLib"],
+  "affects_gameplay": true
+}
