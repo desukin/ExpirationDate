@@ -91,25 +91,38 @@ public static class AllRemorsefulMod
     [HarmonyPatch]
     public static class HideHpPatch
     {
-        static void Postfix(NHealthBar __instance)
+        // 使用 TargetMethod 通过反射查找，避免方法不存在时报错
+        static MethodBase TargetMethod()
         {
+            // 尝试新版方法名
+            var method = AccessTools.Method(typeof(NHealthBar), "RefreshText", Type.EmptyTypes);
+            if (method != null) return method;
+            // 尝试其他可能的方法名
+            method = AccessTools.Method(typeof(NHealthBar), "UpdateHealthDisplay", Type.EmptyTypes);
+            if (method != null) return method;
+            Log.Warn("[ExpirationDate] HideHpPatch: NHealthBar.RefreshText not found, skipping");
+            return null;
+        }
+
         static void Postfix(NHealthBar __instance)
         {
             if (!ExpirationDateConfig.HideEnemyHpEnabled) return;
 
-            var cf = typeof(NHealthBar).GetField("_creature", BindingFlags.NonPublic | BindingFlags.Instance);
-            if (cf?.GetValue(__instance) is Creature creature && creature.IsPlayer) return;
+            try
+            {
+                var cf = typeof(NHealthBar).GetField("_creature", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (cf?.GetValue(__instance) is Creature creature && creature.IsPlayer) return;
 
-            // Hide the HP bar container (background + foreground)
-            var fgc = typeof(NHealthBar).GetField("_hpForegroundContainer", BindingFlags.NonPublic | BindingFlags.Instance);
-            if (fgc?.GetValue(__instance) is Control ctrl) ctrl.Visible = false;
+                // Hide the HP bar container (background + foreground)
+                var fgc = typeof(NHealthBar).GetField("_hpForegroundContainer", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (fgc?.GetValue(__instance) is Control ctrl) ctrl.Visible = false;
 
-            // Text already shows ? from previous logic, but belt-and-suspenders:
-            var hf = typeof(NHealthBar).GetField("_hpLabel", BindingFlags.NonPublic | BindingFlags.Instance);
-            var bf = typeof(NHealthBar).GetField("_blockLabel", BindingFlags.NonPublic | BindingFlags.Instance);
-            if (hf?.GetValue(__instance) is Label hl) hl.Text = "?";
+                // Hide HP text
+                var hf = typeof(NHealthBar).GetField("_hpLabel", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (hf?.GetValue(__instance) is Label hl) hl.Text = "?";
+            }
+            catch (Exception ex) { Log.Error($"[ExpirationDate] HideHp: {ex.Message}"); }
         }
-    }
     }
 
     // ── 5. All Events: Monster rooms → Unknown ──
